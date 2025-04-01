@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
 
-
+const BASE_URL = 'http://localhost:5000/';
 
 export const AllRecordofUser = createAsyncThunk(
     'allrecord/AllRecordofUser',
@@ -16,7 +16,7 @@ export const AllRecordofUser = createAsyncThunk(
   
       try {
         const response = await fetch(
-          `http://localhost:5000/admin/allUserList?page=${page}&name=${name}&email=${email}&status=${status}&sortOrder=${sortOrder}`, 
+          `${BASE_URL}admin/allUserList?page=${page}&name=${name}&email=${email}&status=${status}&sortOrder=${sortOrder}`, 
           {
             method: 'GET',
             headers: {
@@ -58,7 +58,7 @@ export const AllRecordofUser = createAsyncThunk(
           id: userId,
         };
   
-        const response = await fetch(`http://localhost:5000/admin/updateuserStatus/${userId}`, {
+        const response = await fetch(`${BASE_URL}admin/updateuserStatus/${userId}`, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
@@ -100,7 +100,7 @@ export const AllRecordofUser = createAsyncThunk(
   
       try {
         const response = await fetch(
-          `http://localhost:5000/admin/allUserContacts?page=${page}&name=${name}&email=${email}&mobile=${mobile}&category=${category}&sortBy=${sortBy}&status=${status}&sortOrder=${sortOrder}`, 
+          `${BASE_URL}admin/allUserContacts?page=${page}&name=${name}&email=${email}&mobile=${mobile}&category=${category}&sortBy=${sortBy}&status=${status}&sortOrder=${sortOrder}`, 
           {
             method: 'GET',
             headers: {
@@ -141,7 +141,7 @@ export const AllRecordofUser = createAsyncThunk(
           id: userId,
         };
   
-        const response = await fetch(`http://localhost:5000/admin/updateContactStatus/${userId}`, {
+        const response = await fetch(`${BASE_URL}admin/updateContactStatus/${userId}`, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
@@ -185,7 +185,7 @@ export const fetchTotalContacts = createAsyncThunk(
   
       try {
         const response = await fetch(
-          `http://localhost:5000/admin/getContactTotalCount`, 
+          `${BASE_URL}admin/getContactTotalCount`, 
           {
             method: 'GET',
             headers: {
@@ -221,7 +221,7 @@ export const fetchTotalContacts = createAsyncThunk(
   
       try {
         const response = await fetch(
-          `http://localhost:5000/admin/getFavoriteContact`, 
+          `${BASE_URL}admin/getFavoriteContact`, 
           {
             method: 'GET',
             headers: {
@@ -254,7 +254,7 @@ export const fetchTotalContacts = createAsyncThunk(
       }
   
       try {
-        const response = await fetch(`http://localhost:5000/admin/gettotalgroups`, 
+        const response = await fetch(`${BASE_URL}admin/gettotalgroups`, 
           {
             method: 'GET',
             headers: {

@@ -2,6 +2,9 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { toast } from 'react-toastify';
 
+// Define the global base URL
+//const BASE_URL = 'https://coantact-part-2-backend.onrender.com';
+const BASE_URL = 'http://localhost:5000';
 
 // Fetch User Data (GET API with Token)
 export const fetchUserData = createAsyncThunk(
@@ -11,7 +14,7 @@ export const fetchUserData = createAsyncThunk(
       const token = localStorage.getItem("token"); // Get token from localStorage
       if (!token) throw new Error("Token not found");
 
-      const response = await fetch("http://localhost:5000/auth/user", {
+      const response = await fetch(`${BASE_URL}/auth/user`, {
         headers: { Authorization: `Bearer ${token}` },
       });
 
@@ -19,7 +22,6 @@ export const fetchUserData = createAsyncThunk(
 
       return await response.json(); // Return the user data
     } catch (error) {
-     
       return rejectWithValue(error.message); // Reject with error message
     }
   }
@@ -33,7 +35,7 @@ export const postRegisterData = createAsyncThunk(
 
     try {
       // Make the POST request to the server
-      const response = await fetch("http://localhost:5000/auth/registernormal", {
+      const response = await fetch(`${BASE_URL}/auth/registernormal`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -44,9 +46,7 @@ export const postRegisterData = createAsyncThunk(
       // Check if the response is ok (status code in range 200-299)
       if (!response.ok) {
         const errorData = await response.json();
-        // Optionally log the error response data
         console.error("Error response data:", errorData);
-        // You can provide more detailed feedback to the user based on the response
         toast.error(errorData.message || "Failed to register user");
         throw new Error(errorData.message || "Failed to post user data");
       }
@@ -57,7 +57,6 @@ export const postRegisterData = createAsyncThunk(
       return data;
 
     } catch (error) {
-      // Handle any error, including network errors
       console.error("Error during registration:", error);
       toast.error(error.message || "Something went wrong during registration");
       return rejectWithValue(error.message); // Reject with error message
@@ -65,22 +64,19 @@ export const postRegisterData = createAsyncThunk(
   }
 );
 
-
-//For login Normal
-
+// For login Normal
 export const postLoginData = createAsyncThunk(
   "user/postLoginData",
-  async (postLoginDatas, {rejectWithValue }) => {
-    //console.log("I am Action" + JSON.stringify(postLoginDatas,null,2))
+  async (postLoginDatas, { rejectWithValue }) => {
     try {
-      const response = await fetch("http://localhost:5000/auth/normallogin", {
+      const response = await fetch(`${BASE_URL}/auth/normallogin`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(postLoginDatas), // Send post data
       });
-     
+
       if (!response.ok) throw new Error("Failed to post user data");
 
       return await response.json(); // Return the response data from the POST request
@@ -90,9 +86,7 @@ export const postLoginData = createAsyncThunk(
   }
 );
 
-
 // Update Profile Data
-
 export const updateprofileData = createAsyncThunk(
   'user/updateprofileData',
   async (formData, { rejectWithValue }) => {
@@ -104,20 +98,17 @@ export const updateprofileData = createAsyncThunk(
     }
 
     try {
-      // Create FormData to append the file and other fields
       const data = new FormData();
-      // Append the rest of the fields from the formData object
       Object.keys(formData).forEach(key => {
         if (key !== "file") {
           data.append(key, formData[key]);
         }
       });
-      // Append the file to the FormData
       if (formData.file) {
         data.append('file', formData.file);
       }
 
-      const response = await fetch(`http://localhost:5000/auth/updateprofile`, {
+      const response = await fetch(`${BASE_URL}/auth/updateprofile`, {
         method: 'PUT',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -146,7 +137,6 @@ export const updateprofileData = createAsyncThunk(
   }
 );
 
-
 // Testing purpose making action
 export const uploadFileTesting = createAsyncThunk(
   'user/uploadFileTesting',
@@ -160,14 +150,13 @@ export const uploadFileTesting = createAsyncThunk(
 
     try {
       const formData = new FormData();
-      formData.append('file', file); // Assuming the file is the input parameter
-      console.log("Form Data", file);
-      const response = await fetch('http://localhost:5000/auth/fileuplaod', {
+      formData.append('file', file);
+      const response = await fetch(`${BASE_URL}/auth/fileuplaod`, {
         method: 'PUT',
         headers: {
-          'Authorization': `Bearer ${token}`, // Token included in the Authorization header
+          'Authorization': `Bearer ${token}`,
         },
-        body: formData, // Form data containing the file
+        body: formData,
       });
 
       if (!response.ok) {
@@ -192,13 +181,10 @@ export const uploadFileTesting = createAsyncThunk(
 );
 
 // Email Notifications For make action
-
 export const emailNotifications = createAsyncThunk(
   'user/emailNotifications',
   async (settingData,{ rejectWithValue }) => {
-    
     const token = localStorage.getItem('token');
-    console.log("Setting " + JSON.stringify(settingData));
     if (!token) {
       const errorMessage = 'No token found in localStorage';
       toast.error(errorMessage);
@@ -206,7 +192,7 @@ export const emailNotifications = createAsyncThunk(
     }
 
     try {
-       const response = await fetch(`http://localhost:5000/auth/emailnotification`, {
+       const response = await fetch(`${BASE_URL}/auth/emailnotification`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -235,14 +221,11 @@ export const emailNotifications = createAsyncThunk(
   }
 );
 
-
 // Update Password updatePassword
 export const updatePassword = createAsyncThunk(
   'user/updatePassword',
   async ({newPassword, renewPassword},{ rejectWithValue }) => {
-    
     const token = localStorage.getItem('token');
-    //console.log("Password " + JSON.stringify(newPassword) + " " + JSON.stringify(renewPassword));
     if (!token) {
       const errorMessage = 'No token found in localStorage';
       toast.error(errorMessage);
@@ -251,7 +234,7 @@ export const updatePassword = createAsyncThunk(
 
     try {
        const passwordData = {newPassword, renewPassword};
-       const response = await fetch(`http://localhost:5000/auth/updatenewpassword`, {
+       const response = await fetch(`${BASE_URL}/auth/updatenewpassword`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -280,7 +263,7 @@ export const updatePassword = createAsyncThunk(
   }
 );
 
-export const logout = ()=>{
+export const logout = () => {
   localStorage.clear(); // Clears all items from localStorage
   window.location.href = "/"; // Redirect to login page
-}
+};

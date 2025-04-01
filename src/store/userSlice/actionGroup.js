@@ -1,6 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { toast } from 'react-toastify';
 
+const BASE_URL = 'http://localhost:5000/';
 export const fetchGroups = createAsyncThunk(
     'group/fetchGroups',
     async ({ page = 1, filters, sort }, { rejectWithValue }) => {
@@ -15,7 +16,7 @@ export const fetchGroups = createAsyncThunk(
       try {
         
         const response = await fetch(
-          `http://localhost:5000/groups/getgroups?page=${page}&name=${name}&sortBy=${sortBy}&status=${status}&sortOrder=${sortOrder}`, 
+          `${BASE_URL}groups/getgroups?page=${page}&name=${name}&sortBy=${sortBy}&status=${status}&sortOrder=${sortOrder}`, 
           {
             method: 'GET',
             headers: {
@@ -50,7 +51,7 @@ export const fetchGroups = createAsyncThunk(
        console
       try {
         const response = await fetch(
-          `http://localhost:5000/contacts/getcontactsByGroups?page=${page}&name=${name}&email=${email}&mobile=${mobile}&category=${category}&sortBy=${sortBy}&status=${status}&sortOrder=${sortOrder}`, 
+          `${BASE_URL}contacts/getcontactsByGroups?page=${page}&name=${name}&email=${email}&mobile=${mobile}&category=${category}&sortBy=${sortBy}&status=${status}&sortOrder=${sortOrder}`, 
           {
             method: 'GET',
             headers: {
@@ -92,7 +93,7 @@ export const fetchGroups = createAsyncThunk(
       
       try {
         const response = await fetch(
-          `http://localhost:5000/assigncontactgroup/UserwiseAssignedContact?page=${page}&group_name=${group_name}&sortBy=${sortBy}&sortOrder=${sortOrder}`, 
+          `${BASE_URL}assigncontactgroup/UserwiseAssignedContact?page=${page}&group_name=${group_name}&sortBy=${sortBy}&sortOrder=${sortOrder}`, 
           {
             method: 'GET',
             headers: {
@@ -125,7 +126,7 @@ export const fetchGroups = createAsyncThunk(
             throw new Error('No token found in localStorage');
         }
   
-        const response = await fetch(`http://localhost:5000/assigncontactgroup/${groupID}`, {
+        const response = await fetch(`${BASE_URL}assigncontactgroup/${groupID}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -166,7 +167,7 @@ export const fetchGroups = createAsyncThunk(
         return rejectWithValue(errorMessage);
       }
       try {
-        const response = await fetch(`http://localhost:5000/assigncontactgroup/${collectionID}`, {
+        const response = await fetch(`${BASE_URL}assigncontactgroup/${collectionID}`, {
           method: 'DELETE',
           headers: {
             'Content-Type': 'application/json',
@@ -206,7 +207,7 @@ export const fetchGroups = createAsyncThunk(
       }
   
       try {
-        const response = await fetch('http://localhost:5000/groups/creategroup', {
+        const response = await fetch('${BASE_URL}groups/creategroup', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -246,7 +247,7 @@ export const fetchGroups = createAsyncThunk(
         return rejectWithValue(errorMessage);
       }
       try {
-        const response = await fetch(`http://localhost:5000/groups/deletegroup/${contactId}`, {
+        const response = await fetch(`${BASE_URL}groups/deletegroup/${contactId}`, {
           method: 'DELETE',
           headers: {
             'Content-Type': 'application/json',
@@ -292,7 +293,7 @@ export const fetchGroups = createAsyncThunk(
           id: groupId,
         };
   
-        const response = await fetch(`http://localhost:5000/groups/updategroupstatus/${groupId}`, {
+        const response = await fetch(`${BASE_URL}groups/updategroupstatus/${groupId}`, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
@@ -331,7 +332,7 @@ export const fetchGroups = createAsyncThunk(
             throw new Error('No token found in localStorage');
         }
   
-        const response = await fetch(`http://localhost:5000/groups/getgroupbyid/${userId}`, {
+        const response = await fetch(`${BASE_URL}groups/getgroupbyid/${userId}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -373,7 +374,7 @@ export const fetchGroups = createAsyncThunk(
       }
   
       try {
-        const response = await fetch(`http://localhost:5000/groups/updategroup/${contactData.id}`, {
+        const response = await fetch(`${BASE_URL}groups/updategroup/${contactData.id}`, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
@@ -418,7 +419,7 @@ export const contactAssignToGroup = createAsyncThunk(
 
     try {
       // Make the API request to assign the contact(s) to the group
-      const response = await fetch('http://localhost:5000/assigncontactgroup/assignContactsingleToGroup', {
+      const response = await fetch('${BASE_URL}assigncontactgroup/assignContactsingleToGroup', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -462,7 +463,7 @@ export const fetchTotalGroupsCount = createAsyncThunk(
 
     try {
       const response = await fetch(
-        `http://localhost:5000/groups/gettotalgroups`, 
+        `${BASE_URL}groups/gettotalgroups`, 
         {
           method: 'GET',
           headers: {

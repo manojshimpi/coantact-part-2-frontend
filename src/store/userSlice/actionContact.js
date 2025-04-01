@@ -1,6 +1,8 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { toast } from 'react-toastify';
 
+const BASE_URL = 'http://localhost:5000/';
+
 export const fetchContacts = createAsyncThunk(
   'contacts/fetchContacts',
   async ({ page = 1, filters, sort }, { rejectWithValue }) => {
@@ -14,7 +16,7 @@ export const fetchContacts = createAsyncThunk(
 
     try {
       const response = await fetch(
-        `http://localhost:5000/contacts/getcontactsByUser?page=${page}&name=${name}&email=${email}&mobile=${mobile}&category=${category}&isFavorite=${isFavorite}&sortBy=${sortBy}&status=${status}&sortOrder=${sortOrder}`, 
+        `${BASE_URL}contacts/getcontactsByUser?page=${page}&name=${name}&email=${email}&mobile=${mobile}&category=${category}&isFavorite=${isFavorite}&sortBy=${sortBy}&status=${status}&sortOrder=${sortOrder}`, 
         {
           method: 'GET',
           headers: {
@@ -48,7 +50,7 @@ export const addContact = createAsyncThunk(
       }
   
       try {
-        const response = await fetch('http://localhost:5000/contacts/addcontact', {
+        const response = await fetch('${BASE_URL}contacts/addcontact', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -88,7 +90,7 @@ export const editContacts = createAsyncThunk('contacts/editContacts',
     }
     const id = '67dae622d63d188e6da4327c';
     try {
-      const response = await fetch(`http://localhost:5000/contacts/updatecontact/${id}`, {
+      const response = await fetch(`${BASE_URL}contacts/updatecontact/${id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -128,7 +130,7 @@ export const getContactByuserId = createAsyncThunk(
           throw new Error('No token found in localStorage');
       }
 
-      const response = await fetch(`http://localhost:5000/contacts/getcontactById/${userId}`, {
+      const response = await fetch(`${BASE_URL}contacts/getcontactById/${userId}`, {
           method: 'GET',
           headers: {
               'Content-Type': 'application/json',
@@ -169,7 +171,7 @@ export const updateConatcts = createAsyncThunk(
     }
 
     try {
-      const response = await fetch(`http://localhost:5000/contacts/updatecontact/${contactData.id}`, {
+      const response = await fetch(`${BASE_URL}contacts/updatecontact/${contactData.id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -209,7 +211,7 @@ export const deleteContact = createAsyncThunk(
       return rejectWithValue(errorMessage);
     }
     try {
-      const response = await fetch(`http://localhost:5000/contacts/deletecontact/${contactId}`, {
+      const response = await fetch(`${BASE_URL}contacts/deletecontact/${contactId}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
@@ -254,7 +256,7 @@ export const updateContactStatus = createAsyncThunk(
         id: contactId,
       };
 
-      const response = await fetch(`http://localhost:5000/contacts/updatecontactstatus/${contactId}`, {
+      const response = await fetch(`${BASE_URL}contacts/updatecontactstatus/${contactId}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -301,7 +303,7 @@ export const toggleFavoriteStatus = createAsyncThunk(
         id: contactId,
       };
 
-      const response = await fetch(`http://localhost:5000/contacts/updatecontactisFavorite/${contactId}`, {
+      const response = await fetch(`${BASE_URL}contacts/updatecontactisFavorite/${contactId}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -344,7 +346,7 @@ export const fetchTotalContacts = createAsyncThunk(
 
     try {
       const response = await fetch(
-        `http://localhost:5000/contacts/getContactTotalCount`, 
+        `${BASE_URL}contacts/getContactTotalCount`, 
         {
           method: 'GET',
           headers: {
@@ -380,7 +382,7 @@ export const fetchTotalFavoriteContacts = createAsyncThunk(
 
     try {
       const response = await fetch(
-        `http://localhost:5000/contacts/getFavoriteContact`, 
+        `${BASE_URL}contacts/getFavoriteContact`, 
         {
           method: 'GET',
           headers: {
