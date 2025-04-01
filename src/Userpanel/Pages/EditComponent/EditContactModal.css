@@ -1,0 +1,23 @@
+/* Apply a smooth fade-in transition */
+.modal.fade .modal-dialog {
+  opacity: 0;
+  transform: translateY(-50px); /* Start above */
+  transition: opacity 0.8s ease, transform 0.8s ease; /* Slow down the transition */
+}
+
+/* When modal shows, it fades in and moves to center */
+.modal.show .modal-dialog {
+  opacity: 1;
+  transform: translateY(0); /* Moves the modal to its final position */
+}
+
+/* Slow-motion effect for modal backdrop */
+.modal.fade .modal-backdrop {
+  opacity: 0;
+  transition: opacity 0.8s ease; /* Slow fade-in for backdrop */
+}
+
+/* When modal is shown, backdrop becomes visible */
+.modal.show .modal-backdrop {
+  opacity: 0.5; /* Light opacity for backdrop */
+}

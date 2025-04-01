@@ -1,0 +1,13 @@
+.error-message {
+    color: red;
+    font-size: 12px;
+  }
+
+  .PhoneInputInput{
+    border: none !important;
+    outline: none;
+  }
+  .PhoneInputInput :hover{
+    border: none !important;
+    outline: none;
+  }
